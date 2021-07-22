@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Layout, Menu } from "antd";
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import Dashboard from "./pages";
 
-function App() {
+const { Header, Content, Footer, Sider } = Layout;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider breakpoint="lg" collapsedWidth="0">
+        <div
+          style={{
+            height: "32px",
+            margin: "16px",
+            background: "rgba(255, 255, 255, 0.2)",
+          }}
+        />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="1" icon={<UserOutlined />}>
+            Dashboard
+          </Menu.Item>
+          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+            Nilai
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      <Layout>
+        <Header
+          className="site-layout-sub-header-background"
+          style={{ padding: 0 }}
+        />
+        <Content style={{ margin: "24px 16px 0" }}>
+          <Dashboard />
+        </Content>
+        <Footer style={{ textAlign: "center" }}>AR Dashboard ©2021</Footer>
+      </Layout>
+    </Layout>
   );
-}
+};
 
 export default App;
