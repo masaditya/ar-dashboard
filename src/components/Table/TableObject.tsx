@@ -1,6 +1,7 @@
-import { Button, Table, Tag } from "antd";
-import { useEffect, useState } from "react";
+import { Button, notification, Popconfirm, Space, Table, Tag } from "antd";
+import { useCallback, useEffect, useState } from "react";
 import { database } from "../../firebase";
+import { CodeSandboxOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const TableObject = () => {
   const [data, setData] = useState<any>([]);
@@ -17,6 +18,15 @@ const TableObject = () => {
     });
   }, []);
 
+  const confirmDelete = useCallback((id) => {
+    const dbRef = database.ref("object").child(id);
+    dbRef.remove();
+    notification.success({
+      message: "Hapus Soal",
+      description: "Berhasil menghapus data soal",
+    });
+  }, []);
+
   const columns = [
     {
       title: "Object",
@@ -24,8 +34,8 @@ const TableObject = () => {
       key: "object_url",
       render: (t: any, d: any) => {
         return (
-          <Button type="primary" size="small" target="_blank" href={t}>
-            Show Object
+          <Button type="default" size="small" target="_blank" href={t}>
+            <CodeSandboxOutlined /> Show Object
           </Button>
         );
       },
@@ -42,7 +52,7 @@ const TableObject = () => {
       render: (t: string, d: any) => {
         return (
           <>
-            {t.split(" ").map((kw, i) => {
+            {t.split(/\s+/).map((kw, i) => {
               return (
                 <Tag color="success" key={i}>
                   {kw}
@@ -50,6 +60,31 @@ const TableObject = () => {
               );
             })}
           </>
+        );
+      },
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (t: any, d: any) => {
+        return (
+          <Space size="middle">
+            <Button type="primary" size="small">
+              Update
+            </Button>
+            <Popconfirm
+              title="Apakah anda akan menghapus soal ini?"
+              placement="left"
+              onConfirm={() => confirmDelete(d.id)}
+              // onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button danger type="primary" size="small">
+                <DeleteOutlined />
+              </Button>
+            </Popconfirm>
+          </Space>
         );
       },
     },

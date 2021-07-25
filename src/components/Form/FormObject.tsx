@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Button, Upload, Form, Input, Tag, notification } from "antd";
+import {
+  Button,
+  Upload,
+  Form,
+  Input,
+  Tag,
+  notification,
+  InputNumber,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { storage, database } from "../../firebase";
 
@@ -69,6 +77,9 @@ const FormObject = () => {
       })
       .then(() => {
         setIsLoadingSubmit(false);
+        form.resetFields();
+        setFileList([])
+        setIsUploaded(false)
         notification.success({
           message: "Disimpan",
           description: "Data berhasil disimpan",
@@ -102,7 +113,7 @@ const FormObject = () => {
       <Button
         type="primary"
         onClick={handleUpload}
-        disabled={fileList.length !== 1}
+        disabled={fileList.length !== 1 || isUploaded}
         loading={uploading}
         style={{ marginTop: 16 }}
       >
@@ -133,6 +144,18 @@ const FormObject = () => {
         </Form.Item>
 
         <Form.Item
+          label="Skala Objek"
+          name="object_scale"
+          rules={[{ required: true, message: "Please input object scale!" }]}
+        >
+          <InputNumber
+            style={{ width: "100%" }}
+            min={0}
+            placeholder="Skala objek"
+          />
+        </Form.Item>
+
+        <Form.Item
           hidden
           label="Url Object"
           name="object_url"
@@ -151,7 +174,7 @@ const FormObject = () => {
           <Input
             placeholder="Keyword di pisahkan dengan tanda spasi"
             onChange={(e) => {
-              setKeywords(e.target.value.split(" "));
+              setKeywords(e.target.value.split(/\s+/));
               form.setFieldsValue({
                 object_keyword: e.target.value,
               });
