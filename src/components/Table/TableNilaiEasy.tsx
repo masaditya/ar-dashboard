@@ -1,13 +1,13 @@
 import { Button, notification, Popconfirm, Space, Table, Tag } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { database } from "../../firebase";
-import { CodeSandboxOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 
-const TableNilai = () => {
+const TableNilaiEasy = () => {
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
-    const objectRef = database.ref("object");
+    const objectRef = database.ref("score");
     objectRef.on("value", (snapshot) => {
       const objects = snapshot.val();
       const objectList = [];
@@ -19,7 +19,7 @@ const TableNilai = () => {
   }, []);
 
   const confirmDelete = useCallback((id) => {
-    const dbRef = database.ref("object").child(id);
+    const dbRef = database.ref("score").child(id);
     dbRef.remove();
     notification.success({
       message: "Hapus Soal",
@@ -29,38 +29,26 @@ const TableNilai = () => {
 
   const columns = [
     {
-      title: "Object",
-      dataIndex: "object_url",
-      key: "object_url",
-      render: (t: any, d: any) => {
-        return (
-          <Button type="default" size="small" target="_blank" href={t}>
-            <CodeSandboxOutlined /> Show Object
-          </Button>
-        );
-      },
+      title: "Level",
+      dataIndex: "level",
+      key: "level",
     },
     {
       title: "Nama",
-      dataIndex: "object_name",
-      key: "object_name",
+      dataIndex: "user",
+      key: "user",
     },
     {
-      title: "Keyword",
-      dataIndex: "object_keyword",
-      key: "object_keyword",
-      render: (t: string, d: any) => {
-        return (
-          <>
-            {t.split(/\s+/).map((kw, i) => {
-              return (
-                <Tag color="success" key={i}>
-                  {kw}
-                </Tag>
-              );
-            })}
-          </>
-        );
+      title: "Score",
+      dataIndex: "score",
+      key: "score",
+    },
+    {
+      title: "Answer",
+      dataIndex: "question",
+      key: "question",
+      render: (t: any, d: any) => {
+        return <Tag color="success">{t.object_name}</Tag>;
       },
     },
     {
@@ -69,9 +57,9 @@ const TableNilai = () => {
       render: (t: any, d: any) => {
         return (
           <Space size="middle">
-            <Button type="primary" size="small">
+            {/* <Button type="primary" size="small">
               Update
-            </Button>
+            </Button> */}
             <Popconfirm
               title="Apakah anda akan menghapus soal ini?"
               placement="left"
@@ -89,7 +77,13 @@ const TableNilai = () => {
       },
     },
   ];
-  return <Table rowKey="id" dataSource={data} columns={columns} />;
+  return (
+    <Table
+      rowKey={() => Math.random().toString()}
+      dataSource={data}
+      columns={columns}
+    />
+  );
 };
 
-export default TableNilai;
+export default TableNilaiEasy;

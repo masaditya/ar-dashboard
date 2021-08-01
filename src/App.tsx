@@ -44,7 +44,7 @@ const App = () => {
             <Route path="/user">
               <User />
             </Route>
-            <Route path="/dashboard">
+            <Route path="/nilai">
               <Nilai />
             </Route>
           </Switch>

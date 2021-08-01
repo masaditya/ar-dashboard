@@ -15,7 +15,6 @@ const TableUser = () => {
       usernames.forEach((name: string) => {
         userList.push({ username: name });
       });
-      console.log(userList);
       setData(userList);
     });
   }, []);

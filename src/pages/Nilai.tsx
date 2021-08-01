@@ -1,17 +1,22 @@
-import { Col, Row } from "antd";
-import FormObject from "../components/Form/FormObject";
-import TableObject from "../components/Table/TableObject";
+import { Select, Form } from "antd";
+import { useState } from "react";
+import TableNilaiEasy from "../components/Table/TableNilaiEasy";
+import TableNilaiHard from "../components/Table/TableNilaiHard";
 
 const Nilai = () => {
+  const [isEasy, setIsEasy] = useState(true);
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 48 }}>
-      <Col xs={24} md={10} style={{ textAlign: "center" }}>
-        <FormObject />
-      </Col>
-      <Col xs={24} md={14} style={{ textAlign: "center" }}>
-        <TableObject />
-      </Col>
-    </Row>
+    <div>
+      <Form labelCol={{ span: 1 }} wrapperCol={{ span: 10 }}>
+        <Form.Item label="Level">
+          <Select onChange={() => setIsEasy(!isEasy)} defaultValue="easy">
+            <Select.Option value="easy">Easy</Select.Option>
+            <Select.Option value="hard">Hard</Select.Option>
+          </Select>
+        </Form.Item>
+      </Form>
+      {isEasy ? <TableNilaiEasy /> : <TableNilaiHard />}
+    </div>
   );
 };
 

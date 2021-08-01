@@ -10,7 +10,6 @@ const FormUser = () => {
 
   const onFinish = (values: any) => {
     setIsLoadingSubmit(true);
-    console.log(crypto.MD5(values.password).toString());
     database
       .ref("users/" + values.username)
       .set({
