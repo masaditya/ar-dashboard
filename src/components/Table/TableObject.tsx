@@ -69,9 +69,6 @@ const TableObject = () => {
       render: (t: any, d: any) => {
         return (
           <Space size="middle">
-            <Button type="primary" size="small">
-              Update
-            </Button>
             <Popconfirm
               title="Apakah anda akan menghapus soal ini?"
               placement="left"
