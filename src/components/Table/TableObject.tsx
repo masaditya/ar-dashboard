@@ -20,11 +20,18 @@ const TableObject = () => {
 
   const confirmDelete = useCallback((id) => {
     const dbRef = database.ref("object").child(id);
-    dbRef.remove();
-    notification.success({
-      message: "Hapus Soal",
-      description: "Berhasil menghapus data soal",
-    });
+    if(dbRef != null){
+      dbRef.remove();
+      notification.success({
+        message: "Hapus Soal",
+        description: "Berhasil menghapus data soal",
+      }); 
+    }else{
+      notification.success({
+        message: "Hapus Soal",
+        description: "Gagal menghapus data soal",
+      });
+    }
   }, []);
 
   const columns = [
