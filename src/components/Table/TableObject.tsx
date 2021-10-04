@@ -22,8 +22,8 @@ const TableObject = () => {
     const dbRef = database.ref("object").child(id);
     dbRef.remove();
     notification.success({
-      message: "Hapus Soal",
-      description: "Berhasil menghapus data soal",
+      message: "Delete Task",
+      description: "Successfully Delete Task",
     });
   }, []);
 
@@ -70,7 +70,7 @@ const TableObject = () => {
         return (
           <Space size="middle">
             <Popconfirm
-              title="Apakah anda akan menghapus soal ini?"
+              title="Are you sure to delete this task?"
               placement="left"
               onConfirm={() => confirmDelete(d.id)}
               // onCancel={cancel}

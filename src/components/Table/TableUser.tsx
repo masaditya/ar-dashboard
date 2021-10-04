@@ -23,8 +23,8 @@ const TableUser = () => {
     const dbRef = database.ref("users/" + username);
     dbRef.remove();
     notification.success({
-      message: "Hapus User",
-      description: "Berhasil menghapus data User",
+      message: "Delete Task",
+      description: "Successfully Delete Task",
     });
   }, []);
 
@@ -42,7 +42,7 @@ const TableUser = () => {
           <Space size="middle">
             
             <Popconfirm
-              title="Apakah anda akan menghapus user ini?"
+              title="Are you sure to delete this task?"
               placement="left"
               onConfirm={() => confirmDelete(d.username)}
               okText="Yes"
