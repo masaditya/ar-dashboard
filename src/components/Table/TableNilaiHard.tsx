@@ -22,8 +22,8 @@ const TableNilaiHard = () => {
     const dbRef = database.ref("score").child(id);
     dbRef.remove();
     notification.success({
-      message: "Hapus Soal",
-      description: "Berhasil menghapus data soal",
+      message: "Delete Task",
+      description: "Successfully Delete Task",
     });
   }, []);
 
@@ -71,7 +71,7 @@ const TableNilaiHard = () => {
               Update
             </Button> */}
             <Popconfirm
-              title="Apakah anda akan menghapus soal ini?"
+              title="Are you sure to delete this task?"
               placement="left"
               onConfirm={() => confirmDelete(d.id)}
               // onCancel={cancel}
