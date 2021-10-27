@@ -8,7 +8,27 @@ import Nilai from "./pages/Nilai";
 
 const { Header, Content, Footer, Sider } = Layout;
 
+const routes = [
+  {
+    path: "/",
+    exact: true,
+    component: Dashboard
+  },
+  {
+    path: "/user",
+    exact: false,
+    component: User
+  },
+  {
+    path: "/nilai",
+    exact: true,
+    component: Nilai
+  },
+]
+
 const App = () => {
+
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider breakpoint="lg" collapsedWidth="0">
@@ -38,15 +58,11 @@ const App = () => {
         />
         <Content style={{ margin: "24px 16px 0" }}>
           <Switch>
-            <Route exact path="/">
-              <Dashboard />
-            </Route>
-            <Route path="/user">
-              <User />
-            </Route>
-            <Route path="/nilai">
-              <Nilai />
-            </Route>
+            {routes.map(route => {
+              return (
+                <Route exact={route.exact} path={route.path} component={route.component} key={route.path}/>
+              )
+            })}
           </Switch>
         </Content>
         <Footer style={{ textAlign: "center" }}>AR Dashboard ©2021</Footer>
